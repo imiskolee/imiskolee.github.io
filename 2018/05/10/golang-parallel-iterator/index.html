@@ -9,14 +9,14 @@
     <meta name="description" content="A Software Enginner. Forcus On Backend &amp; Database &amp; Signal &amp; Music.">
 <meta name="keywords" content="Technology,science,music">
 <meta property="og:type" content="article">
-<meta property="og:title" content="first-graphql-based-on-golang">
-<meta property="og:url" content="http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/index.html">
+<meta property="og:title" content="golang-parallel-iterator">
+<meta property="og:url" content="http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/index.html">
 <meta property="og:site_name" content="Misko Lee&#39;s Home Page">
 <meta property="og:description" content="A Software Enginner. Forcus On Backend &amp; Database &amp; Signal &amp; Music.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-10T03:57:01.000Z">
+<meta property="og:updated_time" content="2018-05-10T09:02:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="first-graphql-based-on-golang">
+<meta name="twitter:title" content="golang-parallel-iterator">
 <meta name="twitter:description" content="A Software Enginner. Forcus On Backend &amp; Database &amp; Signal &amp; Music.">
     
     
@@ -37,7 +37,7 @@
         
     
     <!-- title -->
-    <title>first-graphql-based-on-golang</title>
+    <title>golang-parallel-iterator</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -75,10 +75,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/05/10/golang-parallel-iterator/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" href="/2018/05/10/three-mintues-to-rust/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/05/10/first-graphql-based-on-golang/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -91,16 +89,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&text=first-graphql-based-on-golang"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&is_video=false&description=first-graphql-based-on-golang"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=first-graphql-based-on-golang&body=Check out this article: http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&name=first-graphql-based-on-golang&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&text=golang-parallel-iterator"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&is_video=false&description=golang-parallel-iterator"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=golang-parallel-iterator&body=Check out this article: http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&name=golang-parallel-iterator&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -117,7 +115,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        first-graphql-based-on-golang
+        golang-parallel-iterator
     </h1>
 
 
@@ -128,7 +126,7 @@
       </span>
       
     <div class="postdate">
-        <time datetime="2018-05-10T03:57:01.000Z" itemprop="datePublished">2018-05-10</time>
+        <time datetime="2018-05-10T09:02:10.000Z" itemprop="datePublished">2018-05-10</time>
     </div>
 
 
@@ -172,16 +170,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&text=first-graphql-based-on-golang"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&is_video=false&description=first-graphql-based-on-golang"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=first-graphql-based-on-golang&body=Check out this article: http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&title=first-graphql-based-on-golang"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://miskolee.stft.co/2018/05/10/first-graphql-based-on-golang/&name=first-graphql-based-on-golang&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&text=golang-parallel-iterator"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&is_video=false&description=golang-parallel-iterator"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=golang-parallel-iterator&body=Check out this article: http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&title=golang-parallel-iterator"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://miskolee.stft.co/2018/05/10/golang-parallel-iterator/&name=golang-parallel-iterator&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
