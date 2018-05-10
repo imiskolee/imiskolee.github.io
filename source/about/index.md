@@ -11,6 +11,8 @@ I'm born in southern China 1990s. Since 2012, I became a Full-Time Software Engi
 
 I started to learn music when I was 8, and also still keeping. I work on music before Engineer. I enjoy keyboard, guitar and compose with MIDI in my spare time.
 
+
+
 ## Experience
 
 * I am work on HTML5 Canvas and PHP for build mini web game since 2012.

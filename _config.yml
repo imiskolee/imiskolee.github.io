@@ -76,8 +76,9 @@ theme_config:
   colorscheme: light
   nav:
     Home: /
-    Archive: /archive
+    Archive: /archives
     Project: /projects
+    Link: /links
     About: /about  
 
 # Deployment
