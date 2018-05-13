@@ -77,10 +77,13 @@ theme_config:
   nav:
     Home: /
     Archive: /archives
-    Project: /projects
+    Project: /repos
     Link: /links
     About: /about  
-
+  posts_overview:
+    show_all_posts: true
+  social_links:
+    github: https://github.com/imiskolee
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
