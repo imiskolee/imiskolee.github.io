@@ -76,6 +76,7 @@ theme_config:
   colorscheme: light
   nav:
     Home: /
+    Research: /
     Archive: /archives
     Project: /repos
     Link: /links

@@ -1,14 +1,14 @@
 ---
-title: golang-parallel-iterator
+title: Golang Parllel Iterator
 date: 2018-05-10 17:02:10
 tags:
 ---
 
 ## Parallel Iterator
 
-As well as we know, if we has a component can be visit each item of a slice or array, we called the component is `iterator`. so, `parallel iterator` mean the iterator can be parllel vistit item.
+As well as we know, if we have a component can visit each item of a slice or array, we called is `iterator`. 
 
-
+if an `Iterator` can visit more than 1 item same time, we called it is `Parallel Iterator`.
 
 ## Parllel Iterator for Golang
 
@@ -21,7 +21,9 @@ As well as we know, if we has a component can be visit each item of a slice or a
  }
 ```
 
-In the exmaple 1, its very fast,let we change the logic to:
+In example 1, it's showing an iterator for an integer slice. It's simple and fast, looks like everything is ok. 
+
+Let me define a `Web Site Fetcher`, the Fetcher can be download a website data.
 
 ```go
 // @Example 2:
@@ -53,10 +55,40 @@ for _,url := range urls {
 }
 }
 ```
+{% diagram "Example 2 Work Flow"  %}
+digraph G {
+graph [
+rankdir = "LR"
+];
+node [
+fontsize = "16"
+shape = "ellipse"
+];
+edge [
+];
 
-The blow example is a simple web fetcher for get website response and save it to database. the method `Fetch` is very slow(beacuse the request is http). we conside each request need N seconds, we need fetch M urls, so the total fetch time is N * M(O(N)).
+"node0" [
+label = "<f0> 1| <f1> HTTP Request | <f2> 2 | <f3> HTTP Request | <f4> 3 |<f5> HTTP Request  | <f6> 4 | <f7> HTTP Request  | <f8> 5 | <f9> HTTP Request"
+shape = "record"
+];
 
-we can easy to reduce overall processing time with goroutine. 
+"node0":f0 -> "node0":f1
+"node0":f1 -> "node0":f2
+"node0":f2  -> "node0":f3
+"node0":f3  -> "node0":f4
+"node0":f4  -> "node0":f5
+"node0":f5  -> "node0":f6
+"node0":f6  -> "node0":f7
+"node0":f7  -> "node0":f8
+"node0":f8  -> "node0":f9
+}
+{% enddiagram %}
+
+The above example is a simple web fetcher for getting website response and saves it to a database. The method `Fetch` is very slow(because the request is public HTTP). 
+
+we assume each request need N seconds to get data , the total fetch time is N * M(O(N)) when we need to fetch M URLs.
+
+Don't worry,  we can easy to reduce overall processing time with goroutine.  Let we still focus on code.
 
 ```go
 // @example 3
@@ -74,9 +106,73 @@ for _,url := range urls {
 
 ```
 
-We parllel to fetch each url current, the total fetch time is equal the max of thoose.  Gorountine looks like very powerful to solove  the issue,but it's still has another problem.
+{% diagram "Example 3 Work Flow"  %}
 
-We need N gorontinues to process each url, we can't control gorontinue's number(), its very danger, we need find a way to control max gorontinue's number limit.
+ digraph G {
+graph [
+rankdir = "LR"
+];
+node [
+fontsize = "16"
+shape = "ellipse"
+];
+edge [
+];
+
+"node0" [
+label = "<f0> 1| <f1> 2|<f2> 3|<f3> 4|<f4> 5"
+shape = "record"
+];
+
+"node1" [
+label = "<f0> Goroutine 1| <f1> Goroutine 2|<f2> Goroutine 3|<f3> Goroutine 4|<f4> Goroutine 5"
+shape = "record"
+];
+
+"node2" [
+label = "<f0> CPU Core 1| <f1> CPU Core 2"
+shape = "record"
+];
+
+"node3" [
+label = "<f0> HTTP Request 1| <f1> HTTP Request 2|<f2> HTTP Request 3|<f3> HTTP Request 4|<f4> HTTP Request 5"
+shape = "record"
+];
+
+"node0":f0 -> "node1":f0
+"node0":f1 -> "node1":f1
+"node0":f2 -> "node1":f2
+"node0":f3 -> "node1":f3
+"node0":f4 -> "node1":f4
+
+"node1":f0 -> "node2":f1
+"node1":f1 -> "node2":f0
+"node1":f2 -> "node2":f0
+"node1":f3 -> "node2":f1
+"node1":f4 -> "node2":f1
+
+"node2":f0 -> "node3":f0
+"node2":f0 -> "node3":f1
+"node2":f1 -> "node3":f2
+"node2":f1 -> "node3":f3
+"node2":f1 -> "node3":f4
+
+"node3":f0 -> Done
+"node3":f1 -> Done
+"node3":f2 -> Done
+"node3":f3 -> Done
+"node3":f4 ->Done
+
+}
+
+{% enddiagram %}
+
+
+The above example looks very fast. because the method `Fetch` is run in parallel current, the total fetch time is equal to the max of those.  Goroutine looks like very powerful to solve the issue, but it still has another problem.
+
+We need N goroutines to process each URL, we can't control goroutine's number, we need to create a lot goroutine and database resource when we have a lot of URLs, its very danger in production environment, we need to find a way to control max gorontinue's number.
+
+In Golang world, it's also easy.  you need some time to analyze the example.
 
 ```go
 // @example 4
@@ -124,12 +220,13 @@ Parallel(urls,n,func(idx int,item interface{}){
 
 ```
 
-In the last example. we use gorontinue for parllel and control concurrence with  `WaitGroup`.
+In the last example. we used goroutine for parllel and control parllel with  `WaitGroup`.
 
+Same as its name, `WaitGroup` is a way to control(Wait these all be done.) a group(more than 1 goroutines). You can be found the detail in [here](https://golang.org/pkg/sync/#WaitGroup).
 
 ### More Examples
 
-* if we need load remote resource of each item when i load a list from database.
+* If we need load remote resource of each item when i load a list from database.
 
 
 ### Best Practice

@@ -113,13 +113,13 @@ open_graph:
 
 # Fill in your Disqus Comments Shortname to enable Disqus comments.
 disqus: 
-  enabled: false
-  shortname: cactus-1
+  enabled: enable
+  shortname: misko-lees-home-page
 
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
 google_analytics: 
-  enabled: false
-  id: UA-86660611-1
+  enabled: enable
+  id: UA-42468194-2
 
 # Fill in your Baidu Analytics tracking ID to enable Baidu Analytics.
 baidu_analytics:
@@ -129,4 +129,4 @@ baidu_analytics:
 # Fill in you Gravatar user id / email if you want to use your gravatar as the
 # logo and/or favicons of you website.
 gravatar:
-  email: name@email.com
+  email: misko.lee@stft.co
