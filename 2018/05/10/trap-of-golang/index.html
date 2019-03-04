@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="A Software Enginner. Forcus On Backend &amp; Database &amp; Signal &amp; Music.">
+    <meta name="description" content="IntroGolang is an nice backend system programming language, but it’s also has some trap. we are talking some traps from my experice. TOP 1. Easy Concurrent and Hard Safety.The keyword go is very easy">
 <meta name="keywords" content="Technology,science,music">
 <meta property="og:type" content="article">
 <meta property="og:title" content="trap-of-golang">
 <meta property="og:url" content="http://miskolee.stft.co/2018/05/10/trap-of-golang/index.html">
 <meta property="og:site_name" content="Misko Lee&#39;s Home Page">
-<meta property="og:description" content="A Software Enginner. Forcus On Backend &amp; Database &amp; Signal &amp; Music.">
+<meta property="og:description" content="IntroGolang is an nice backend system programming language, but it’s also has some trap. we are talking some traps from my experice. TOP 1. Easy Concurrent and Hard Safety.The keyword go is very easy">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-10T03:55:05.000Z">
+<meta property="og:updated_time" content="2019-03-04T05:39:14.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="trap-of-golang">
-<meta name="twitter:description" content="A Software Enginner. Forcus On Backend &amp; Database &amp; Signal &amp; Music.">
+<meta name="twitter:description" content="IntroGolang is an nice backend system programming language, but it’s also has some trap. we are talking some traps from my experice. TOP 1. Easy Concurrent and Hard Safety.The keyword go is very easy">
     
     
         
@@ -61,9 +61,9 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Archive</a></li>
+          <li><a href="/">Research</a></li>
          
-          <li><a href="/research">Research</a></li>
+          <li><a href="/archives">Archive</a></li>
          
           <li><a href="/repos">Project</a></li>
          
@@ -77,7 +77,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/05/10/docker-and-kubernetes/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/05/10/golang-parallel-iterator/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2018/05/10/compare-parser/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -107,7 +107,7 @@
 
     </div>
     <div id="toc">
-      
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TOP-1-Easy-Concurrent-and-Hard-Safety"><span class="toc-number"></span> <span class="toc-text">TOP 1. Easy Concurrent and Hard Safety.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Top-2-Nil-Error-Not-Is-Nil-Error"><span class="toc-number"></span> <span class="toc-text">Top 2: Nil Error Not Is Nil Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Top-3-Don’t-Forget-Close-Resource"><span class="toc-number"></span> <span class="toc-text">Top 3: Don’t Forget Close Resource</span></a>
     </div>
   </span>
 </div>
@@ -141,9 +141,44 @@
   
 
   <div class="content" itemprop="articleBody">
-    
+    <h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><p><code>Golang</code> is an nice backend system programming language, but it’s also has some trap. we are talking some traps from my experice.</p>
+<h2 id="TOP-1-Easy-Concurrent-and-Hard-Safety"><a href="#TOP-1-Easy-Concurrent-and-Hard-Safety" class="headerlink" title="TOP 1. Easy Concurrent and Hard Safety."></a>TOP 1. Easy Concurrent and Hard Safety.</h2><p>The keyword <code>go</code> is very easy than thread pool and async callback solution for concurrently programming. </p>
+<p>Let we showing an example:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">results := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">urls := []<span class="keyword">string</span>&#123;<span class="string">"url1"</span>,<span class="string">"url2"</span>,<span class="string">"url3"</span>&#125;</span><br><span class="line"><span class="keyword">for</span> _,url := <span class="keyword">range</span> urls &#123;</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(url <span class="keyword">string</span>)</span></span>&#123;</span><br><span class="line">        results[url] = getData(url)</span><br><span class="line">    &#125;(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We can easy use Goroutines to paralle fetch remote data. but the above example has a bug related to concurrently. You can see a panic error likes <code>concurrently write map</code> and <strong>shutdown your application</strong>. </p>
+<p>Why?</p>
+<p>Because the standard map type not allow directly share to multi goroutnes. It’s not goroutinue level safely type, and nothing happen in at compile time(the behavior can’t accept in Rust).</p>
+<p>More seriously is the bug very difficult to find in the development phase.</p>
+<p>We need to control it very carefully With Lock.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">results := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span><br><span class="line">resultLock := &amp;sync.Mutex&#123;&#125;</span><br><span class="line"></span><br><span class="line">urls := []<span class="keyword">string</span>&#123;<span class="string">"url1"</span>,<span class="string">"url2"</span>,<span class="string">"url3"</span>&#125;</span><br><span class="line"><span class="keyword">for</span> _,url := <span class="keyword">range</span> urls &#123;</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(url <span class="keyword">string</span>)</span></span>&#123;</span><br><span class="line">        resultLock.Lock()</span><br><span class="line">        <span class="keyword">defer</span> resultLock.Unlock()</span><br><span class="line">        results[url] = getData(url)</span><br><span class="line">    &#125;(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Another way is use <code>sync.Map</code> to replace <code>map</code>, but i don’t like it.</p>
+<h2 id="Top-2-Nil-Error-Not-Is-Nil-Error"><a href="#Top-2-Nil-Error-Not-Is-Nil-Error" class="headerlink" title="Top 2: Nil Error Not Is Nil Error"></a>Top 2: Nil Error Not Is Nil Error</h2><p>In Golang world, the last return value is an error interface if this function might return an error(eg: can’t access resource).</p>
+<p>But the standard error just is a string value,can’t set error code likes C. I am try to define a custom Error struct for error code:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CustomError <span class="keyword">struct</span> &#123;</span><br><span class="line">    code <span class="keyword">int</span></span><br><span class="line">    msg <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewCustomError</span><span class="params">(code <span class="keyword">int</span>,msg <span class="keyword">string</span>)</span> *<span class="title">CustomError</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;CustomError&#123;code:code,msg:msg&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *CustomError)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"code=%d msg=%s"</span>,e.code,e.msg)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *CustomError)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> e.Error()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *CustomError)</span> <span class="title">Code</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> e.code</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FuncOne</span><span class="params">(value <span class="keyword">int</span>)</span> <span class="params">(<span class="keyword">int</span>,*CustomError)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> value &lt; <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>,NewCustomError(<span class="number">101</span>,<span class="string">"value need gte 0"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value + <span class="number">1</span>,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FuncTwo</span><span class="params">(value1 <span class="keyword">int</span>,value2 <span class="keyword">int</span>)</span> <span class="params">(<span class="keyword">int</span>,error)</span></span> &#123;</span><br><span class="line">    v,err := FuncOne(value1)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> v,err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> v+value2,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"> v ,err := FuncTwo(<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"> <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">     log.Println(<span class="string">"FuncTwo error of case 1"</span>)</span><br><span class="line">     <span class="keyword">return</span></span><br><span class="line"> &#125;</span><br><span class="line"> v,err = FuncOne(v)</span><br><span class="line"> <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Println(<span class="string">"FuncOne error of case 1"</span>)</span><br><span class="line">     <span class="keyword">return</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Can you wait a few mintues for think what’s thing will output ? </strong></p>
+<p><a href="https://play.golang.org/p/l2VdD5mCMh1" target="_blank" rel="noopener">Click here,run it on https://play.glang.org</a></p>
+<p>Is that what you didn’t expect? </p>
+<p>In fact, we can found a lot issues in github.</p>
+<ul>
+<li><a href="https://github.com/golang/go/issues/15695" target="_blank" rel="noopener">https://github.com/golang/go/issues/15695</a></li>
+</ul>
+<p><a href="https://golang.org/doc/faq#nil_error" target="_blank" rel="noopener">Click here, if you want to know why</a></p>
+<h2 id="Top-3-Don’t-Forget-Close-Resource"><a href="#Top-3-Don’t-Forget-Close-Resource" class="headerlink" title="Top 3: Don’t Forget Close Resource"></a>Top 3: Don’t Forget Close Resource</h2><p>Golang have a standard HTTP package named <code>net/http</code>, it’s included a HTTP Client. Let we focus on a example:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReadRemoteData</span><span class="params">()</span> <span class="params">([]<span class="keyword">byte</span>,error)</span></span> &#123;</span><br><span class="line">remoteResourceURL := <span class="string">"http://url"</span></span><br><span class="line">resp,err := http.Get(remoteResourceURL)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">nil</span>,err   </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> ioutil.ReadAll(resp.Body)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The above example function <code>ReadRemoteData</code> will read another HTTP Server data and return it. Looks like is fine, but it hides a huge problem.</p>
+<p>Because HTTP protocol is a TCP Connection,the connection always opened if nobody to close it. So,the above exmaple has Resource Leak bug(TCP Connection).</p>
+<p>In some script language(PHP),we don’t need care it. Because all resource will automic release in the end. </p>
+<p>PHP is a linear system and hold the whole process for each request. The life cycle of any resource is clear,so we automic release resource. But,Golang world can’t match the model, we need careful manage any opened resource.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ReadRemoteData</span><span class="params">()</span> <span class="params">([]<span class="keyword">byte</span>,error)</span></span> &#123;</span><br><span class="line">remoteResourceURL := <span class="string">"http://url"</span></span><br><span class="line">resp,err := http.Get(remoteResourceURL)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">nil</span>,err   </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//we will close the connection when we don't need it.</span></span><br><span class="line"><span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line"><span class="keyword">return</span> ioutil.ReadAll(resp.Body)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
   </div>
 </article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
 
 
 
@@ -157,9 +192,9 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Archive</a></li>
+          <li><a href="/">Research</a></li>
          
-          <li><a href="/research">Research</a></li>
+          <li><a href="/archives">Archive</a></li>
          
           <li><a href="/repos">Project</a></li>
          
@@ -171,7 +206,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TOP-1-Easy-Concurrent-and-Hard-Safety"><span class="toc-number"></span> <span class="toc-text">TOP 1. Easy Concurrent and Hard Safety.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Top-2-Nil-Error-Not-Is-Nil-Error"><span class="toc-number"></span> <span class="toc-text">Top 2: Nil Error Not Is Nil Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Top-3-Don’t-Forget-Close-Resource"><span class="toc-number"></span> <span class="toc-text">Top 3: Don’t Forget Close Resource</span></a>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -203,7 +238,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2018 Misko Lee
+    Copyright &copy; 2019 Misko Lee
   </div>
   <div class="footer-right">
     <nav>
@@ -211,9 +246,9 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Archive</a></li>
+          <li><a href="/">Research</a></li>
          
-          <li><a href="/research">Research</a></li>
+          <li><a href="/archives">Archive</a></li>
          
           <li><a href="/repos">Project</a></li>
          
@@ -240,8 +275,29 @@
 
 <!-- Google Analytics -->
 
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-42468194-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
 <!-- Baidu Analytics -->
 
 <!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'misko-lees-home-page';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
 
 
