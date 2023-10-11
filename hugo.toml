@@ -1,0 +1,66 @@
+baseURL = '/'
+languageCode = 'zh-cn'
+title = "Misko Lee's Home Page"
+theme = "mainroad"
+paginate = "10"
+[menu]
+[[menu.main]]
+    name = "Infra"
+    pageRef = '/categories/infra/'
+    weight = 10
+[[menu.main]]
+    name = 'Audio'
+    pageRef = '/categories/audio/'
+    weight = 20
+[[menu.main]]
+    name = 'Literary Creation'
+    pageRef = '/categories/creation'
+    weight = 30
+[[menu.main]]
+    name = 'About Me'
+    pageRef = '/about'
+    weight = 40
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[Author]
+  name = "Misko Lee"
+  bio  = "An engineer specializing in programming and music"
+  avatar = "img/avatar.png"
+
+[Params]
+  description = "Focus on system design, backend programming, cloud computing, real-time audio signal processing"
+  copyright = "Misko Lee"
+  opengraph = true
+  schema = true
+  twitter_cards = false
+  readmore = true
+  authorbox = true
+  toc = true
+  pager = true
+  post_meta = ["author", "date", "categories", "translations"]
+  mainSections = ["post", "blog", "news"]
+  dateformat =  "2006-01-02"
+  mathjax = true
+  mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js"
+  mathjaxConfig = "TeX-AMS-MML_HTMLorMML"
+  googleFontsLink = "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700"
+  
+[Params.thumbnail]
+  visibility = ["list", "post"]
+
+[Params.sidebar]
+  home = "right" # Configure layout for home page
+  list = "left"  # Configure layout for list pages
+  single = false # Configure layout for single pages
+  # Enable widgets in given order
+  widgets = ["search", "recent", "categories", "taglist", "social", "languages"]
+
+[Params.widgets]
+  recent_num = 5 # Set the number of articles in the "Recent articles" widget
+  categories_counter = false # Enable counter for each category in "Categories" widget
+  tags_counter = false # Enable counter for each tag in "Tags" widget
+
+
