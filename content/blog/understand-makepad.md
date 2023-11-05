@@ -1,6 +1,6 @@
 +++
 title = '理解Makepad中的布局系统'
-date = 2023-11-06T22:23:31+08:00
+date = 2023-11-05T22:23:31+08:00
 draft = false
 categories = ["Rust","GUI"]
 +++
