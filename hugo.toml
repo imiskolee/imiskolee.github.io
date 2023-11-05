@@ -1,4 +1,5 @@
 baseURL = '/'
+staticDir = ['assets']
 languageCode = 'zh-cn'
 title = "Misko Lee's Home Page"
 theme = "mainroad"
@@ -47,7 +48,7 @@ paginate = "10"
   mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js"
   mathjaxConfig = "TeX-AMS-MML_HTMLorMML"
   googleFontsLink = "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700"
-  
+
 [Params.thumbnail]
   visibility = ["list", "post"]
 
